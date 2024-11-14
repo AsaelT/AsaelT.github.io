@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JavaScript & APIs</title>
- 
+
   <style>
     body {
       width: 400px;
@@ -32,9 +32,9 @@
       font-size: 16px;
       margin: 5px 0;
     }
-    .container{
-        border: solid black 2px;
-        padding: 50px;
+    .container {
+      border: solid black 2px;
+      padding: 50px;
     }
   </style>
 </head>
@@ -75,17 +75,11 @@
 
       console.log(location);
 
-      const responseW = await fetch("https://community-open-weather-map.p.rapidapi.com/find?q=" + location.city + "&units=imperial", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-          "x-rapidapi-key": "044e648b19mshfece6f865ead2b3p1a1a7ajsn036a4345378f"
-        }
-      });
+      const responseW = await fetch(`https://api.weatherapi.com/v1/current.json?key=98ce24c009054a42b8d185323241411&q=${location.city}`);
+      const weatherData = await responseW.json();
+      document.getElementById("weather").innerText = weatherData.current.condition.text;
 
-      const weather = await responseW.json();
-      document.getElementById("weather").innerText = weather.list[0].weather[0].description;
-      console.log(weather.list[0].weather[0].main);
+      console.log(weatherData.current.condition.text);
     }
 
     loadLocation();
