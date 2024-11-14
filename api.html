@@ -45,13 +45,17 @@
 
     <h1>JavaScript & API's</h1>
     <p>I have IP-grabbed you and now I can dox you.</p>
-
+    <h2> Your IP address is: </h2> 
+    <p id="IP"></p>
     <h2>You are from:</h2>
     <p id="city"></p>
     <p id="country"></p>
 
-    <h2>The weather there is:</h2>
+    <h2>The weather there is (based on location):</h2>
     <p id="weather"></p>
+
+    <h2>The weather there is (based on IP Address):</h2>
+    <p id="weather2"></p>
 
   </div>
 
@@ -75,11 +79,16 @@
 
       console.log(location);
 
-      const responseW = await fetch(`https://api.weatherapi.com/v1/current.json?key=98ce24c009054a42b8d185323241411&q=${location.city}`);
-      const weatherData = await responseW.json();
-      document.getElementById("weather").innerText = weatherData.current.condition.text;
+      const responseWeather = await fetch(`https://api.weatherapi.com/v1/current.json?key=98ce24c009054a42b8d185323241411&q=${location.city}`);
+      const weatherData = await responseWeather.json();
 
-      console.log(weatherData.current.condition.text);
+      const response2 = await fetch("https://api.weatherapi.com/v1/current.json?key=98ce24c009054a42b8d185323241411&q=auto:ip");
+      const weatherData2 = await response2.json();
+
+      document.getElementById("weather").innerText = weatherData.current.condition.text;
+      document.getElementById("IP").innerHTML = ipAddress.ip;
+      document.getElementById("weather2").innerText = weatherData2.current.condition.text;
+
     }
 
     loadLocation();
